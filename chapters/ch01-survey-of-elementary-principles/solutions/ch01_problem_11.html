@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goldstein Ch.1 — Problem 11</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}], throwOnError:false});"></script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: Georgia, serif; line-height: 1.65; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem 3rem; color: #1a1a1a; background: #fafafa; }
+    @media (prefers-color-scheme: dark) { body { color: #e8e8e8; background: #1e1e1e; } hr, th, td { border-color: #444; } pre { background: #2a2a2a; } }
+    h1 { font-size: 1.55rem; } h2 { font-size: 1.2rem; margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.3rem; }
+    h3 { font-size: 1.05rem; margin-top: 1.25rem; } .subtitle { opacity: 0.8; font-style: italic; } .hint { font-size: 0.9rem; opacity: 0.75; }
+    hr { margin: 2rem 0; } pre { background: #eee; padding: 1rem; overflow-x: auto; border-radius: 4px; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0; } th, td { border: 1px solid #ccc; padding: 0.4rem 0.6rem; }
+  </style>
+</head>
+<body>
+
+<h1>Goldstein 3e — Chapter 1, Problem 11</h1>
+<p class="subtitle">Decide whether the force field $\mathbf{F} = yz\,\hat{\imath} + zx\,\hat{\jmath} + xy\,\hat{k}$ is conservative.</p>
+<p class="hint">Book p. 31 (PDF p. 50) · Open with Live Server for auto-refresh</p>
+<hr />
+
+<h2>1. Physical setup</h2>
+<p>We are given a force field in 3D space with components:</p>
+<p>$$F_x = yz, \qquad F_y = zx, \qquad F_z = xy$$</p>
+<p><strong>Core question:</strong> Can we find a scalar potential $V(x,y,z)$ such that $\mathbf{F} = -\nabla V$?</p>
+<p>If yes, the field is <strong>conservative</strong>: work done moving a particle between two points depends only on endpoints, not the path. Equivalently, the work integral around any closed loop is zero.</p>
+
+<h2>2. Intuition</h2>
+<p><strong>What does “conservative” mean physically?</strong> Imagine dragging a particle through this force field. If the field is conservative, you cannot extract net work by going in a circle — any energy you gain on one leg, you pay back on another. There is no “swirl” in the field.</p>
+<p><strong>Two equivalent tests</strong> (on a simply connected region like all of $\mathbb{R}^3$):</p>
+<ol>
+  <li><strong>Work integral:</strong> $\mathbf{F}\cdot d\mathbf{s}$ is an exact differential (path-independent).</li>
+  <li><strong>Curl test:</strong> $\nabla\times\mathbf{F} = \mathbf{0}$ everywhere.</li>
+</ol>
+<p><strong>Strategy:</strong> First use the work integral — it is the definition. Then cross-check with the curl.</p>
+<p><strong>Common trap:</strong> Checking only one component of curl, or integrating $yz\,dx$ with all coordinates held fixed at once. On a path integral, each leg holds different coordinates fixed.</p>
+
+<h2>3. Formal solution — Work integral</h2>
+<h3>Step 1 — Line element and dot product</h3>
+<p>$$d\mathbf{s} = dx\,\hat{\imath} + dy\,\hat{\jmath} + dz\,\hat{k}$$</p>
+<p>$$\mathbf{F}\cdot d\mathbf{s} = yz\,dx + zx\,dy + xy\,dz$$</p>
+<p><em>Plain language:</em> This is the tiny amount of work done along an infinitesimal displacement.</p>
+
+<h3>Step 2 — Is it an exact differential?</h3>
+<p>Try $V = -xyz$. Then:</p>
+<p>$$d(xyz) = yz\,dx + xz\,dy + xy\,dz$$</p>
+<p>So $\mathbf{F}\cdot d\mathbf{s} = d(xyz) = -dV$, and $\mathbf{F} = -\nabla V$. <strong>The integrand is exact.</strong></p>
+
+<h3>Step 3 — Integrate along a path</h3>
+<p>From $(a,b,c)$ to $(x,y,z)$ via axis-aligned segments:</p>
+<p>$$W = \int_a^x bc\,dx' + \int_b^y xc\,dy' + \int_c^z xy\,dz' = bc(x-a) + xc(y-b) + xy(z-c) = xyz - abc$$</p>
+<p>Depends only on endpoints. <strong>Closed loop</strong> ($start = end$): $W = 0$.</p>
+
+<h2>3. Formal solution — Curl cross-check</h2>
+<p>$$(\nabla\times\mathbf{F})_x = \partial_y(xy) - \partial_z(zx) = x - x = 0$$</p>
+<p>$$(\nabla\times\mathbf{F})_y = \partial_z(yz) - \partial_x(xy) = y - y = 0$$</p>
+<p>$$(\nabla\times\mathbf{F})_z = \partial_x(zx) - \partial_y(yz) = z - z = 0$$</p>
+<p>$$\boxed{\nabla\times\mathbf{F} = \mathbf{0}, \qquad V(x,y,z) = -xyz + C}$$</p>
+
+<h2>4. Sanity checks</h2>
+<table>
+  <tr><th>Check</th><th>Result</th></tr>
+  <tr><td>Symmetry</td><td>$F_x,F_y,F_z$ are cyclic permutations of $(x,y,z)$ — consistent with $V \propto xyz$</td></tr>
+  <tr><td>Origin</td><td>$\mathbf{F}(0,0,0)=\mathbf{0}$</td></tr>
+  <tr><td>Cross-derivatives</td><td>$\partial_x F_y = z = \partial_y F_x$, etc.</td></tr>
+</table>
+
+<h2>5. Takeaway</h2>
+<p><strong>Yes — conservative.</strong> The work integral is exact with $V = -xyz$. Reusable habit: test $\mathbf{F}\cdot d\mathbf{s}$ first (definition), then curl as a quick cross-check.</p>
+
+</body>
+</html>

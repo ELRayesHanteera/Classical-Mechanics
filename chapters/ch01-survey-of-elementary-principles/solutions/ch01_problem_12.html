@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goldstein Ch.1 — Problem 12</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}], throwOnError:false});"></script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: Georgia, serif; line-height: 1.65; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem 3rem; color: #1a1a1a; background: #fafafa; }
+    @media (prefers-color-scheme: dark) { body { color: #e8e8e8; background: #1e1e1e; } hr, th, td { border-color: #444; } pre { background: #2a2a2a; } }
+    h1 { font-size: 1.55rem; } h2 { font-size: 1.2rem; margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.3rem; }
+    h3 { font-size: 1.05rem; margin-top: 1.25rem; } .subtitle { opacity: 0.8; font-style: italic; } .hint { font-size: 0.9rem; opacity: 0.75; }
+    hr { margin: 2rem 0; } pre { background: #eee; padding: 1rem; overflow-x: auto; border-radius: 4px; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0; } th, td { border: 1px solid #ccc; padding: 0.4rem 0.6rem; }
+  </style>
+</head>
+<body>
+
+<h1>Goldstein 3e — Chapter 1, Problem 12</h1>
+<p class="subtitle">Find the orbital period and orbital angular velocity of a satellite in circular orbit at altitude 720 km.</p>
+<p class="hint">Book p. 31 (PDF p. 50) · Given: $R = 6000$ km, $g = 9.83$ m/s$^2$</p>
+<hr />
+
+<h2>1. Physical setup</h2>
+<pre>
+        *  satellite  (mass m, speed v)
+       /
+      /  r = R + h
+     *
+    Earth (center)
+</pre>
+<p>A satellite traces a <strong>circle</strong> at fixed radius $r$ from Earth's center. Gravity provides the inward centripetal force. We neglect atmosphere, Earth's rotation, and treat Earth as a point mass.</p>
+<table>
+  <tr><th>Symbol</th><th>Value</th></tr>
+  <tr><td>$R$</td><td>$6000$ km $= 6.00\times10^6$ m</td></tr>
+  <tr><td>$h$</td><td>$720$ km $= 7.20\times10^5$ m</td></tr>
+  <tr><td>$r = R+h$</td><td>$6720$ km $= 6.72\times10^6$ m</td></tr>
+  <tr><td>$g$</td><td>$9.83$ m/s$^2$ (at surface)</td></tr>
+</table>
+
+<h2>2. Intuition</h2>
+<p><strong>What we're really asking:</strong> How fast must the satellite move so gravity bends its path into a circle? And how long does one lap take?</p>
+<p>At radius $r$, circular motion needs centripetal acceleration $v^2/r$ pointing toward Earth's center. Gravity supplies $GM/r^2$. Balance them:</p>
+<p>$$\frac{v^2}{r} = \frac{GM}{r^2} \quad\Rightarrow\quad v = \sqrt{\frac{GM}{r}}$$</p>
+<p>One orbit = circumference $2\pi r$ at speed $v$, so $T = 2\pi r/v$ and $\omega = v/r = 2\pi/T$.</p>
+<p><strong>Key trick:</strong> We are not given $GM$, but we <em>are</em> given $g$ at the surface. Since $g = GM/R^2$, we can write everything in terms of $R$, $r$, and $g$.</p>
+<p><strong>What if $h = 0$?</strong> Then $r = R$ and $v = \sqrt{gR} \approx 7.7$ km/s — a familiar low-orbit speed scale.</p>
+
+<h2>3. Formal solution</h2>
+<h3>Step 1 — Orbital speed</h3>
+<p>$$\frac{GMm}{r^2} = \frac{mv^2}{r} \quad\Rightarrow\quad v^2 = \frac{GM}{r}$$</p>
+<p>Use $GM = gR^2$:</p>
+<p>$$\boxed{v = \sqrt{\frac{gR^2}{r}} = R\sqrt{\frac{g}{r}} = R\sqrt{\frac{g}{R+h}}}$$</p>
+<p><em>Plain language:</em> Speed falls as $1/\sqrt{r}$ — higher orbit, slower satellite.</p>
+
+<h3>Step 2 — Period</h3>
+<p>$$T = \frac{2\pi r}{v} = 2\pi\sqrt{\frac{r^3}{gR^2}}$$</p>
+<p>This is Kepler's third law for circular orbits: $T^2 \propto r^3$.</p>
+
+<h3>Step 3 — Angular velocity</h3>
+<p>$$\boxed{\omega = \frac{v}{r} = \sqrt{\frac{gR^2}{r^3}} = \frac{2\pi}{T}}$$</p>
+
+<h3>Step 4 — Numbers</h3>
+<p>$$v = 6.00\times10^6\sqrt{\frac{9.83}{6.72\times10^6}} \approx \mathbf{7.26\ \text{km/s}}$$</p>
+<p>$$T = \frac{2\pi(6.72\times10^6)}{7.26\times10^3} \approx \mathbf{5.82\times10^3\ \text{s} \approx 97.0\ \text{min}}$$</p>
+<p>$$\omega \approx \mathbf{1.08\times10^{-3}\ \text{rad/s}}$$</p>
+
+<h2>4. Sanity checks</h2>
+<table>
+  <tr><th>Check</th><th>Result</th></tr>
+  <tr><td>Dimensions</td><td>$[v]=\text{m/s}$, $[T]=\text{s}$, $[\omega]=\text{rad/s}$ ✓</td></tr>
+  <tr><td>Low orbit scale</td><td>ISS-like orbits ($r \sim 6700$ km) have $T \sim 90$–$95$ min — 97 min is right</td></tr>
+  <tr><td>Relativity</td><td>$v \ll c$ — classical mechanics valid ✓</td></tr>
+</table>
+
+<h2>5. Takeaway</h2>
+<p>Given surface $g$ and $R$, circular-orbit quantities are $v = R\sqrt{g/r}$, $T = 2\pi r/v$, $\omega = v/r$. The $r^{3/2}$ scaling of $T$ is Kepler's third law in action.</p>
+
+</body>
+</html>

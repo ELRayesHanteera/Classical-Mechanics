@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goldstein Ch.1 — Problem 13</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}], throwOnError:false});"></script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: Georgia, serif; line-height: 1.65; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem 3rem; color: #1a1a1a; background: #fafafa; }
+    @media (prefers-color-scheme: dark) { body { color: #e8e8e8; background: #1e1e1e; } hr, th, td { border-color: #444; } pre { background: #2a2a2a; } }
+    h1 { font-size: 1.55rem; } h2 { font-size: 1.2rem; margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.3rem; }
+    h3 { font-size: 1.05rem; margin-top: 1.25rem; } .subtitle { opacity: 0.8; font-style: italic; } .hint { font-size: 0.9rem; opacity: 0.75; }
+    hr { margin: 2rem 0; } pre { background: #eee; padding: 1rem; overflow-x: auto; border-radius: 4px; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0; } th, td { border: 1px solid #ccc; padding: 0.4rem 0.6rem; }
+  </style>
+</head>
+<body>
+
+<h1>Goldstein 3e — Chapter 1, Problem 13</h1>
+<p class="subtitle">Derive the rocket equation; integrate for constant burn rate; estimate fuel-to-empty weight ratio for escape velocity.</p>
+<p class="hint">Book p. 31 (PDF p. 50)</p>
+<hr />
+
+<h2>1. Physical setup</h2>
+<pre>
+         ↑ +y (up)
+         |
+      [ rocket ]  ← m(t), v(t)
+         |
+      ~~~~ exhaust  → speed v' relative to rocket
+         |
+      ─── ground ───
+         g ↓
+</pre>
+<table>
+  <tr><th>Symbol</th><th>Meaning</th><th>Units</th></tr>
+  <tr><td>$m(t)$</td><td>Rocket mass (incl. fuel)</td><td>kg</td></tr>
+  <tr><td>$v(t)$</td><td>Upward velocity</td><td>m/s</td></tr>
+  <tr><td>$v'$</td><td>Exhaust speed relative to rocket</td><td>m/s</td></tr>
+  <tr><td>$g$</td><td>Gravitational acceleration</td><td>m/s$^2$</td></tr>
+  <tr><td>$m_0$</td><td>Initial mass</td><td>kg</td></tr>
+  <tr><td>$m_e$</td><td>Empty rocket mass</td><td>kg</td></tr>
+</table>
+<p><strong>Part C data:</strong> $v' = 2.1$ km/s, $|\dot m| = m_0/60$ s$^{-1}$, start from rest, target $v_{\text{esc}} \approx 11.2$ km/s.</p>
+
+<h2>2. Intuition</h2>
+<p><strong>Skateboard analogy:</strong> Throw bricks backward → you roll forward. A rocket throws exhaust continuously, but gravity pulls down the whole time.</p>
+<p><strong>Not fixed mass:</strong> You cannot use $F=ma$ with constant $m$. Mass leaves every second.</p>
+<p><strong>What Goldstein asks:</strong></p>
+<ol>
+  <li><strong>A:</strong> Derive $m\dot v = -v'\dot m - mg$ from momentum.</li>
+  <li><strong>B:</strong> Integrate for constant $\dot m = -m_0/60$.</li>
+  <li><strong>C:</strong> How much fuel vs empty rocket for escape speed?</li>
+</ol>
+<p><strong>Why momentum?</strong> Thrust is momentum carried away by exhaust. Energy works too, but momentum tracks thrust directly.</p>
+<p><strong>Sign trap:</strong> $dm/dt &lt; 0$ when fuel burns, so $-v'\dot m &gt; 0$ (thrust upward). ✓</p>
+
+<h2>3. Formal solution — Part A</h2>
+<p><strong>Principle:</strong> Conservation of momentum + external gravitational impulse.</p>
+<h3>Before / after a burn $dt$</h3>
+<p>Before: mass $m$, velocity $v$, momentum $mv$.</p>
+<p>After: rocket $(m+dm)(v+dv)$; ejected gas mass $-dm$ at lab velocity $v - v'$.</p>
+<p>$$p' = (m+dm)(v+dv) + (-dm)(v-v')$$</p>
+<p>External impulse from gravity: $J = -mg\,dt$. So $p' = mv - mg\,dt$.</p>
+<h3>Expand and simplify</h3>
+<p>$$(m+dm)(v+dv) = mv + m\,dv + v\,dm + dm\,dv$$</p>
+<p>$$(-dm)(v-v') = -dm\,v + dm\,v'$$</p>
+<p>The $v\,dm$ terms cancel. Drop $dm\,dv$:</p>
+<p>$$m\,dv + v'\,dm = -mg\,dt$$</p>
+<p>$$\boxed{m\frac{dv}{dt} = -v'\frac{dm}{dt} - mg}$$</p>
+<p><em>Reading:</em> Thrust $-v'\dot m$ (upward since $\dot m&lt;0$) minus weight $mg$.</p>
+<p><strong>Limit $g=0$:</strong> standard free-space rocket equation. ✓</p>
+
+<h2>3. Formal solution — Part B</h2>
+<p>Given $\dot m = -m_0/60$. Define $\mu = m_0/60 = -\dot m$.</p>
+<p>Chain rule: $m\,\frac{dv}{dm}\frac{dm}{dt} = v'\frac{dm}{dt} - mg$ → $m\,\frac{dv}{dm} = v' - \frac{g}{\mu}m$.</p>
+<p>Integrate from $(m_0, v_0)$ to $(m,v)$:</p>
+<p>$$\boxed{v(m) = v_0 - v'\ln\!\left(\frac{m}{m_0}\right) + \frac{g}{\mu}(m-m_0)}$$</p>
+<p>With $v_0=0$ and $\mu = m_0/60$:</p>
+<p>$$\boxed{v(m) = v'\ln\!\left(\frac{m_0}{m}\right) - \frac{60g}{m_0}(m_0-m)}$$</p>
+<p><em>Thrust benefit</em> (logarithmic) minus <em>gravity penalty</em> (linear in fuel used).</p>
+
+<h2>3. Formal solution — Part C</h2>
+<p>At burnout $m = m_e$, let $r = m_f/m_e$:</p>
+<p>$$\boxed{v_{\text{burn}} = v'\ln(r+1) - \frac{60g\,r}{r+1}}$$</p>
+<p>Set $v_{\text{burn}} = v_{\text{esc}} = 11.2\times10^3$ m/s with $v'=2.1\times10^3$ m/s, $g=9.8$ m/s$^2$:</p>
+<p><strong>Crude estimate</strong> ($m_0 \approx m_f$): $v_{\text{esc}} \approx v'\ln r - 60g$ → $r \approx e^{(11200+588)/2100} \approx 274$.</p>
+<p><strong>Exact:</strong> $\boxed{m_f/m_e \approx 273}$ (Goldstein: "almost 300").</p>
+<p>Most thrust accelerates unburned fuel; gravity acts the entire burn.</p>
+
+<h2>4. Sanity checks</h2>
+<table>
+  <tr><th>Check</th><th>Result</th></tr>
+  <tr><td>$g=0$</td><td>$v = v'\ln(m_0/m)$ — Tsiolkovsky ✓</td></tr>
+  <tr><td>$m=m_0$</td><td>$v=0$ ✓</td></tr>
+  <tr><td>Dimensions</td><td>Both terms in m/s ✓</td></tr>
+  <tr><td>Chapter link</td><td>Variable mass → momentum for systems of particles</td></tr>
+</table>
+
+<h2>5. Takeaway</h2>
+<p>Variable mass → momentum conservation, not naive $F=ma$. Thrust is $-v'\dot m$. Escape from rest needs fuel weight ~270–300× empty rocket. <strong>Habit:</strong> isolate a small $dt$, write before/after momenta, identify external impulses.</p>
+
+</body>
+</html>
